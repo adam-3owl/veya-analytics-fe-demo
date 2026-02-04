@@ -16,7 +16,7 @@ interface AnalyticsContextType {
 const AnalyticsContext = createContext<AnalyticsContextType | null>(null)
 
 // Configuration
-const VEYA_ENDPOINT = 'https://analytics.builtonveya.com/v1/events'
+const VEYA_ENDPOINT = '/v1/events'
 const TENANT_ID = import.meta.env.VITE_VEYA_TENANT_ID || 'front_end_demo'
 const BATCH_SIZE = 10
 const FLUSH_INTERVAL = 5000 // 5 seconds
