@@ -17,8 +17,9 @@ export function ProductModal({ item, onClose }: ProductModalProps) {
   useEffect(() => {
     if (item && item.id !== lastTrackedItemId.current) {
       lastTrackedItemId.current = item.id
-      analytics.track('productView', {
-        product: { id: item.id, name: item.name, price: item.price, category: item.category }
+      analytics.track('product_view', {
+        product_id: item.id, product_name: item.name, product_price: item.price, product_category: item.category,
+        page_type: 'product', funnel_step: 'menu', funnel_step_number: 2
       })
       setQuantity(1)
     }

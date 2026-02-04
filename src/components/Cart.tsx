@@ -15,7 +15,7 @@ export function Cart({ isOpen, onClose, onCheckout }: CartProps) {
 
   useEffect(() => {
     if (isOpen && !wasOpen.current) {
-      analytics.track('viewCart', { itemCount: items.length, total })
+      analytics.track('cart_view', { cart_item_count: items.length, cart_value: total, page_type: 'cart', funnel_step: 'cart', funnel_step_number: 3 })
     }
     wasOpen.current = isOpen
   }, [isOpen, analytics, items.length, total])

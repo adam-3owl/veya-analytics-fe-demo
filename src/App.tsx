@@ -22,14 +22,14 @@ function MenuApp() {
   useEffect(() => {
     if (!hasTrackedPageView.current) {
       hasTrackedPageView.current = true
-      analytics.track('pageView', { page: 'menu', title: 'Restaurant Menu' })
+      analytics.track('page_view', { page_type: 'menu', funnel_step: 'menu', funnel_step_number: 2 })
     }
   }, [analytics])
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
     if (query.length >= 2) {
-      analytics.track('search', { query, resultCount: filteredItems.length })
+      analytics.track('search', { search_query: query, result_count: filteredItems.length })
     }
   }
 
@@ -46,14 +46,14 @@ function MenuApp() {
   const handleCategoryClick = (category: string | null) => {
     setSelectedCategory(category)
     if (category) {
-      analytics.track('categoryClicked', { category })
+      analytics.track('category_view', { product_category: category })
     }
   }
 
   const handleCheckout = () => {
     setIsCartOpen(false)
     setIsCheckoutOpen(true)
-    analytics.track('checkoutStart', {})
+    analytics.track('checkout_start', { funnel_step: 'checkout', funnel_step_number: 4 })
   }
 
   return (

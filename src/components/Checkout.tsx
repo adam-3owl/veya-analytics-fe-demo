@@ -25,27 +25,35 @@ export function Checkout({ isOpen, onClose }: CheckoutProps) {
 
   const handleDetailsSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    analytics.track('checkoutStep', { step: 'contact_info', ...formData })
+    analytics.track('checkout_step', {
+      checkout_step: 'contact_info',
+      funnel_step: 'checkout', funnel_step_number: 4,
+      page_type: 'checkout'
+    })
     setStep('payment')
   }
 
   const handlePayment = () => {
-    analytics.track('checkoutStep', { step: 'payment' })
+    analytics.track('checkout_step', {
+      checkout_step: 'payment',
+      funnel_step: 'checkout', funnel_step_number: 4,
+      page_type: 'checkout'
+    })
 
     // Simulate payment processing
     setTimeout(() => {
       const orderId = `ORD-${Date.now()}`
-      analytics.track('checkoutComplete', {
-        order: {
-          id: orderId,
-          olo_order_id: `OLO-${Date.now()}`,
-          total: grandTotal,
-          subtotal: total,
-          tax,
-          itemCount: items.length,
-          orderType: 'pickup',
-          paymentMethod: 'credit_card'
-        },
+      analytics.track('checkout_complete', {
+        cart_value: grandTotal,
+        cart_item_count: items.length,
+        funnel_step: 'confirmation', funnel_step_number: 5,
+        page_type: 'confirmation',
+        order_id: orderId,
+        olo_order_id: `OLO-${Date.now()}`,
+        subtotal: total,
+        tax,
+        order_type: 'pickup',
+        payment_method: 'credit_card',
         items: items.map(i => ({ id: i.id, name: i.name, quantity: i.quantity, price: i.price }))
       })
       setStep('success')

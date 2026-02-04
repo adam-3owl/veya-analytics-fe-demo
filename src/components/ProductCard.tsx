@@ -12,8 +12,9 @@ export function ProductCard({ item, onClick }: ProductCardProps) {
   const analytics = useAnalytics()
 
   const handleClick = () => {
-    analytics.track('productClick', {
-      product: { id: item.id, name: item.name, price: item.price, category: item.category }
+    analytics.track('product_click', {
+      product_id: item.id, product_name: item.name, product_price: item.price, product_category: item.category,
+      page_type: 'menu', funnel_step: 'menu', funnel_step_number: 2
     })
     onClick()
   }

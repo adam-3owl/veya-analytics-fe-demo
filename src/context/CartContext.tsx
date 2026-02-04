@@ -25,17 +25,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addItem = (item: MenuItem, quantity = 1) => {
     const existing = items.find(i => i.id === item.id)
     if (existing) {
-      analytics.track('updateCartQuantity', {
-        product: { id: item.id, name: item.name, price: item.price, category: item.category },
-        oldQuantity: existing.quantity,
-        newQuantity: existing.quantity + quantity
+      analytics.track('update_cart_quantity', {
+        product_id: item.id, product_name: item.name, product_price: item.price, product_category: item.category,
+        quantity: existing.quantity + quantity,
+        old_quantity: existing.quantity, new_quantity: existing.quantity + quantity
       })
       setItems(prev => prev.map(i =>
         i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
       ))
     } else {
-      analytics.track('addToCart', {
-        product: { id: item.id, name: item.name, price: item.price, category: item.category },
+      analytics.track('add_to_cart', {
+        product_id: item.id, product_name: item.name, product_price: item.price, product_category: item.category,
         quantity
       })
       setItems(prev => [...prev, { ...item, quantity }])
@@ -45,8 +45,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const removeItem = (id: string) => {
     const item = items.find(i => i.id === id)
     if (item) {
-      analytics.track('removeFromCart', {
-        product: { id: item.id, name: item.name, price: item.price, category: item.category },
+      analytics.track('remove_from_cart', {
+        product_id: item.id, product_name: item.name, product_price: item.price, product_category: item.category,
         quantity: item.quantity
       })
     }
@@ -60,17 +60,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return
     }
     if (item) {
-      analytics.track('updateCartQuantity', {
-        product: { id: item.id, name: item.name, price: item.price, category: item.category },
-        oldQuantity: item.quantity,
-        newQuantity: quantity
+      analytics.track('update_cart_quantity', {
+        product_id: item.id, product_name: item.name, product_price: item.price, product_category: item.category,
+        quantity,
+        old_quantity: item.quantity, new_quantity: quantity
       })
     }
     setItems(prev => prev.map(i => i.id === id ? { ...i, quantity } : i))
   }
 
   const clearCart = () => {
-    analytics.track('cartCleared', { itemCount: items.length })
+    analytics.track('cart_cleared', { cart_item_count: items.length })
     setItems([])
   }
 
